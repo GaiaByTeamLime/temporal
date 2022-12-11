@@ -1,0 +1,22 @@
+version: '3'
+
+services:
+  database:
+    image: postgres
+    environment:
+      - "POSTGRES_DB=temporal"
+      - "POSTGRES_USER=postgres"
+      - "POSTGRES_PASSWORD=admin"
+      - "PGDATA=/var/lib/postgresql/data/pgdata"
+    volumes:
+      - "./scripts/postgres-schema.sql:/docker-entrypoint-initdb.d/01-schema.sql"
+      - "./mnt/pgdata:/var/lib/postgresql/data"
+
+  temporal:
+    build: .
+    environment:
+      - "DATABASE_URL=postgres://postgres:admin@database/temporal"
+      - "GAIAAUTH_URL=https://auth.dev.gaiaplant.app"
+      - "API_KEY=SAMPLE-API-KEY"
+    ports:
+      - "5000:5000"

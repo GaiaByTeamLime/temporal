@@ -1,0 +1,8 @@
+/target
+.env
+.git/
+*.nix
+Dockerfile
+docker-compose.yml
+.gitignore
+mnt/

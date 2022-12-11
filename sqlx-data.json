@@ -1,0 +1,413 @@
+{
+  "db": "PostgreSQL",
+  "013f189107a347c16f99ed89fd9eaef24a08624069cb490e75eec8ba8a3d31e8": {
+    "query": "SELECT DISTINCT ON (sensor_mac)\n            id AS snapshot_id,\n            sensor_mac,\n            created,\n            illumination,\n            humidity,\n            temperature,\n            voltage,\n            soil_humidity,\n            soil_salt\n         FROM timeseries ORDER BY sensor_mac, created DESC LIMIT $1 OFFSET $2",
+    "describe": {
+      "columns": [
+        {
+          "ordinal": 0,
+          "name": "snapshot_id",
+          "type_info": "Int4"
+        },
+        {
+          "ordinal": 1,
+          "name": "sensor_mac",
+          "type_info": "Bpchar"
+        },
+        {
+          "ordinal": 2,
+          "name": "created",
+          "type_info": "Timestamp"
+        },
+        {
+          "ordinal": 3,
+          "name": "illumination",
+          "type_info": "Float4"
+        },
+        {
+          "ordinal": 4,
+          "name": "humidity",
+          "type_info": "Float4"
+        },
+        {
+          "ordinal": 5,
+          "name": "temperature",
+          "type_info": "Float4"
+        },
+        {
+          "ordinal": 6,
+          "name": "voltage",
+          "type_info": "Float4"
+        },
+        {
+          "ordinal": 7,
+          "name": "soil_humidity",
+          "type_info": "Float4"
+        },
+        {
+          "ordinal": 8,
+          "name": "soil_salt",
+          "type_info": "Float4"
+        }
+      ],
+      "parameters": {
+        "Left": [
+          "Int8",
+          "Int8"
+        ]
+      },
+      "nullable": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
+    },
+    "hash": "013f189107a347c16f99ed89fd9eaef24a08624069cb490e75eec8ba8a3d31e8"
+  },
+  "247711e38df1ccba21771c7e2d7c55fc964e6ca60ba362dc1e270dcd7c806336": {
+    "query": "DELETE FROM timeseries WHERE id = $1",
+    "describe": {
+      "columns": [],
+      "parameters": {
+        "Left": [
+          "Int4"
+        ]
+      },
+      "nullable": []
+    },
+    "hash": "247711e38df1ccba21771c7e2d7c55fc964e6ca60ba362dc1e270dcd7c806336"
+  },
+  "3fa0e4c0ed29b13dd06755555e56575e19c6036bed455389de20144cf31aa967": {
+    "query": "SELECT id AS snapshot_id, sensor_mac, created, illumination, humidity, temperature, voltage, soil_humidity, soil_salt FROM timeseries WHERE id = $1",
+    "describe": {
+      "columns": [
+        {
+          "ordinal": 0,
+          "name": "snapshot_id",
+          "type_info": "Int4"
+        },
+        {
+          "ordinal": 1,
+          "name": "sensor_mac",
+          "type_info": "Bpchar"
+        },
+        {
+          "ordinal": 2,
+          "name": "created",
+          "type_info": "Timestamp"
+        },
+        {
+          "ordinal": 3,
+          "name": "illumination",
+          "type_info": "Float4"
+        },
+        {
+          "ordinal": 4,
+          "name": "humidity",
+          "type_info": "Float4"
+        },
+        {
+          "ordinal": 5,
+          "name": "temperature",
+          "type_info": "Float4"
+        },
+        {
+          "ordinal": 6,
+          "name": "voltage",
+          "type_info": "Float4"
+        },
+        {
+          "ordinal": 7,
+          "name": "soil_humidity",
+          "type_info": "Float4"
+        },
+        {
+          "ordinal": 8,
+          "name": "soil_salt",
+          "type_info": "Float4"
+        }
+      ],
+      "parameters": {
+        "Left": [
+          "Int4"
+        ]
+      },
+      "nullable": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
+    },
+    "hash": "3fa0e4c0ed29b13dd06755555e56575e19c6036bed455389de20144cf31aa967"
+  },
+  "51d348151b361a8f4b8e8346296927e0bea8a53ad9cf38a3e006eb6776c250b2": {
+    "query": "SELECT id AS snapshot_id, sensor_mac, created, illumination, humidity, temperature, voltage, soil_humidity, soil_salt FROM timeseries",
+    "describe": {
+      "columns": [
+        {
+          "ordinal": 0,
+          "name": "snapshot_id",
+          "type_info": "Int4"
+        },
+        {
+          "ordinal": 1,
+          "name": "sensor_mac",
+          "type_info": "Bpchar"
+        },
+        {
+          "ordinal": 2,
+          "name": "created",
+          "type_info": "Timestamp"
+        },
+        {
+          "ordinal": 3,
+          "name": "illumination",
+          "type_info": "Float4"
+        },
+        {
+          "ordinal": 4,
+          "name": "humidity",
+          "type_info": "Float4"
+        },
+        {
+          "ordinal": 5,
+          "name": "temperature",
+          "type_info": "Float4"
+        },
+        {
+          "ordinal": 6,
+          "name": "voltage",
+          "type_info": "Float4"
+        },
+        {
+          "ordinal": 7,
+          "name": "soil_humidity",
+          "type_info": "Float4"
+        },
+        {
+          "ordinal": 8,
+          "name": "soil_salt",
+          "type_info": "Float4"
+        }
+      ],
+      "parameters": {
+        "Left": []
+      },
+      "nullable": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
+    },
+    "hash": "51d348151b361a8f4b8e8346296927e0bea8a53ad9cf38a3e006eb6776c250b2"
+  },
+  "88467c28caf52e81b304e6b7c7fac41bb918551d1b214f3de78019b89c850877": {
+    "query": "INSERT INTO timeseries (sensor_mac, illumination, humidity, temperature, voltage, soil_humidity, soil_salt) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING id AS snapshot_id, created",
+    "describe": {
+      "columns": [
+        {
+          "ordinal": 0,
+          "name": "snapshot_id",
+          "type_info": "Int4"
+        },
+        {
+          "ordinal": 1,
+          "name": "created",
+          "type_info": "Timestamp"
+        }
+      ],
+      "parameters": {
+        "Left": [
+          "Bpchar",
+          "Float4",
+          "Float4",
+          "Float4",
+          "Float4",
+          "Float4",
+          "Float4"
+        ]
+      },
+      "nullable": [
+        false,
+        false
+      ]
+    },
+    "hash": "88467c28caf52e81b304e6b7c7fac41bb918551d1b214f3de78019b89c850877"
+  },
+  "9a723c9e9b12f8627d60a340cb40b968cfba806c5c57b99768e5a2176c9d990a": {
+    "query": "SELECT DISTINCT ON (sensor_mac)\n            id AS snapshot_id,\n            sensor_mac,\n            created,\n            illumination,\n            humidity,\n            temperature,\n            voltage,\n            soil_humidity,\n            soil_salt\n         FROM timeseries ORDER BY sensor_mac, created DESC",
+    "describe": {
+      "columns": [
+        {
+          "ordinal": 0,
+          "name": "snapshot_id",
+          "type_info": "Int4"
+        },
+        {
+          "ordinal": 1,
+          "name": "sensor_mac",
+          "type_info": "Bpchar"
+        },
+        {
+          "ordinal": 2,
+          "name": "created",
+          "type_info": "Timestamp"
+        },
+        {
+          "ordinal": 3,
+          "name": "illumination",
+          "type_info": "Float4"
+        },
+        {
+          "ordinal": 4,
+          "name": "humidity",
+          "type_info": "Float4"
+        },
+        {
+          "ordinal": 5,
+          "name": "temperature",
+          "type_info": "Float4"
+        },
+        {
+          "ordinal": 6,
+          "name": "voltage",
+          "type_info": "Float4"
+        },
+        {
+          "ordinal": 7,
+          "name": "soil_humidity",
+          "type_info": "Float4"
+        },
+        {
+          "ordinal": 8,
+          "name": "soil_salt",
+          "type_info": "Float4"
+        }
+      ],
+      "parameters": {
+        "Left": []
+      },
+      "nullable": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
+    },
+    "hash": "9a723c9e9b12f8627d60a340cb40b968cfba806c5c57b99768e5a2176c9d990a"
+  },
+  "bb3d23fac6bbcba7156142b3b9e1d8ac8459094a49a276616de928066e057878": {
+    "query": "SELECT id AS snapshot_id, sensor_mac, created, illumination, humidity, temperature, voltage, soil_humidity, soil_salt FROM timeseries LIMIT $1 OFFSET $2",
+    "describe": {
+      "columns": [
+        {
+          "ordinal": 0,
+          "name": "snapshot_id",
+          "type_info": "Int4"
+        },
+        {
+          "ordinal": 1,
+          "name": "sensor_mac",
+          "type_info": "Bpchar"
+        },
+        {
+          "ordinal": 2,
+          "name": "created",
+          "type_info": "Timestamp"
+        },
+        {
+          "ordinal": 3,
+          "name": "illumination",
+          "type_info": "Float4"
+        },
+        {
+          "ordinal": 4,
+          "name": "humidity",
+          "type_info": "Float4"
+        },
+        {
+          "ordinal": 5,
+          "name": "temperature",
+          "type_info": "Float4"
+        },
+        {
+          "ordinal": 6,
+          "name": "voltage",
+          "type_info": "Float4"
+        },
+        {
+          "ordinal": 7,
+          "name": "soil_humidity",
+          "type_info": "Float4"
+        },
+        {
+          "ordinal": 8,
+          "name": "soil_salt",
+          "type_info": "Float4"
+        }
+      ],
+      "parameters": {
+        "Left": [
+          "Int8",
+          "Int8"
+        ]
+      },
+      "nullable": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
+    },
+    "hash": "bb3d23fac6bbcba7156142b3b9e1d8ac8459094a49a276616de928066e057878"
+  },
+  "f94da91ed341eb1b7dbe6ee5554c4569490e4f26408dd36af7c1ade562d400fc": {
+    "query": "UPDATE timeseries SET sensor_mac = $1, created = $2, illumination = $3, humidity = $4, temperature = $5, voltage = $6, soil_humidity = $7, soil_salt = $8 WHERE id = $9",
+    "describe": {
+      "columns": [],
+      "parameters": {
+        "Left": [
+          "Bpchar",
+          "Timestamp",
+          "Float4",
+          "Float4",
+          "Float4",
+          "Float4",
+          "Float4",
+          "Float4",
+          "Int4"
+        ]
+      },
+      "nullable": []
+    },
+    "hash": "f94da91ed341eb1b7dbe6ee5554c4569490e4f26408dd36af7c1ade562d400fc"
+  }
+}
