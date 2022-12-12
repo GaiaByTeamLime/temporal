@@ -35,8 +35,8 @@ pub async fn log_with_token(state: &State<ServerState>, token: BearerToken, mac:
     {
         Err(_) => CreateResponse::Forbidden(()),
         Ok(db_mac) => {
-            println!("Request with mac {} and db mac {}", mac, db_mac);
-            if db_mac == mac {
+            println!("Request with mac {} and db mac {}", mac.to_uppercase(), db_mac);
+            if db_mac == mac.to_uppercase() {
                 match state.timeseries.add(InsertSnapshot {
                     sensor_mac: mac,
                     illumination: snapshot.illumination,
