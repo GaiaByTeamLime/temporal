@@ -31,26 +31,26 @@ pub async fn log_with_token(state: &State<ServerState>, token: BearerToken, mac:
     match state
         .auth
         .verify_token(&token)
+        .map_ok(|mac| mac.to_uppercase())
         .await
     {
         Err(_) => CreateResponse::Forbidden(()),
         Ok(db_mac) => {
-            println!("Request with mac {} and db mac {}", mac.to_uppercase(), db_mac);
-            if db_mac == mac.to_uppercase() {
-                match state.timeseries.add(InsertSnapshot {
-                    sensor_mac: mac,
-                    illumination: snapshot.illumination,
-                    humidity: snapshot.humidity,
-                    temperature: snapshot.temperature,
-                    voltage: snapshot.voltage,
-                    soil_humidity: snapshot.soil_humidity,
-                    soil_salt: snapshot.soil_salt,
-                }).await {
-                    Err(e) => CreateResponse::Error(e.to_string()),
-                    Ok(id) => CreateResponse::Created(format!("Inserted with id {}", id)),
-                }
-            } else {
-                CreateResponse::Error("MAC address incorrect.".to_string())
+            if db_mac != mac {
+                return CreateResponse::Error("MAC address incorrect.".to_string());
+            }
+
+            match state.timeseries.add(InsertSnapshot {
+                sensor_mac: mac,
+                illumination: snapshot.illumination,
+                humidity: snapshot.humidity,
+                temperature: snapshot.temperature,
+                voltage: snapshot.voltage,
+                soil_humidity: snapshot.soil_humidity,
+                soil_salt: snapshot.soil_salt,
+            }).await {
+                Err(e) => CreateResponse::Error(e.to_string()),
+                Ok(id) => CreateResponse::Created(format!("Inserted with id {}", id)),
             }
         }
     }
