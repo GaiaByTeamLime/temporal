@@ -1,6 +1,6 @@
 CREATE TABLE timeseries (
     id              SERIAL      NOT NULL PRIMARY KEY,
-    sensor_mac      CHAR(17)    NOT NULL,
+    sensor_uid      CHAR(36)    NOT NULL,
     created         TIMESTAMP   NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
     illumination    REAL        NOT NULL,

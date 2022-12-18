@@ -1,9 +1,11 @@
-use rocket::futures::TryFutureExt;
 use rocket::{post, State, Responder};
 use crate::ServerState;
 use rocket::serde::{Deserialize, json::Json};
 use crate::bearer_token::BearerToken;
 use crate::timeseries::snapshot::InsertSnapshot;
+use rocket::request::FromSegments;
+use rocket::http::uri::Segments;
+use rocket::http::uri::fmt::Path;
 
 #[derive(Debug, Responder)]
 pub enum CreateResponse {
@@ -26,22 +28,43 @@ pub struct PostSnapshot {
     pub soil_salt: f32,
 }
 
-#[post("/log/<mac>", data = "<snapshot>")]
-pub async fn log_with_token(state: &State<ServerState>, token: BearerToken, mac: String, snapshot: Json<PostSnapshot>) -> CreateResponse {
+pub struct Uid {
+    pub uid: String,
+}
+
+impl FromSegments<'_> for Uid {
+    type Error = String;
+
+    fn from_segments(segments: Segments<'_, Path>) -> Result<Self, Self::Error> {
+        let uid: String = segments.into_iter().intersperse("/").collect();
+        if uid.len() > 0 {
+            Ok(Self {
+                uid: uid
+            })
+        } else {
+            Err("uid is empty".to_string())
+        }
+    }
+}
+
+// uid is base64 encoded and can contain '/'
+#[post("/log/<uid..>", data = "<snapshot>")]
+pub async fn log_with_token(state: &State<ServerState>, token: BearerToken, uid: Uid, snapshot: Json<PostSnapshot>) -> CreateResponse {
     match state
         .auth
         .verify_token(&token)
-        .map_ok(|mac| mac.to_uppercase())
         .await
     {
         Err(_) => CreateResponse::Forbidden(()),
-        Ok(db_mac) => {
-            if db_mac != mac {
-                return CreateResponse::Error("MAC address incorrect.".to_string());
+        Ok(db_uid) => {
+            let uid = uid.uid;
+            println!("uid: {}, db uid: {}, token: {:?}", uid, db_uid, token);
+            if db_uid != uid {
+                return CreateResponse::Error("uid incorrect.".to_string());
             }
 
             match state.timeseries.add(InsertSnapshot {
-                sensor_mac: mac,
+                sensor_uid: uid,
                 illumination: snapshot.illumination,
                 humidity: snapshot.humidity,
                 temperature: snapshot.temperature,

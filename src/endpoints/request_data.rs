@@ -1,5 +1,4 @@
 use rocket::{get, State, response::Responder, serde::json::Json};
-use rocket::futures::TryFutureExt;
 use crate::ServerState;
 use crate::bearer_token::BearerToken;
 use crate::timeseries::snapshot::Snapshot;

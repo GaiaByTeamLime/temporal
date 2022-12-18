@@ -12,7 +12,7 @@ pub struct Snapshot {
     #[ormx(default)]
     pub snapshot_id: i32,
 
-    pub sensor_mac: String,
+    pub sensor_uid: String,
 
     #[ormx(default)]
     pub created: NaiveDateTime,
@@ -31,9 +31,9 @@ pub async fn get_newest_snapshots(
 ) -> Result<Vec<Snapshot>, sqlx::Error> {
     let result = ormx::conditional_query_as!(
         Snapshot,
-        "SELECT DISTINCT ON (sensor_mac)
+        "SELECT DISTINCT ON (sensor_uid)
             id AS snapshot_id,
-            sensor_mac,
+            sensor_uid,
             created,
             illumination,
             humidity,
@@ -43,7 +43,7 @@ pub async fn get_newest_snapshots(
             soil_salt
         "
         "FROM timeseries"
-        "ORDER BY sensor_mac, created DESC"
+        "ORDER BY sensor_uid, created DESC"
         Some((l, o)) = limit => {
             "LIMIT" ?(l as i64)
             "OFFSET" ?(o as i64)

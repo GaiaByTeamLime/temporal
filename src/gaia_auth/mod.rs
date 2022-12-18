@@ -1,4 +1,3 @@
-use sqlx::PgPool;
 use crate::bearer_token::BearerToken;
 use reqwest::{StatusCode, header::AUTHORIZATION};
 

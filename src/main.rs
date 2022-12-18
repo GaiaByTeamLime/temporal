@@ -1,6 +1,4 @@
-#![allow(unused_imports)]
-#![allow(unused_variables)]
-#![allow(dead_code)]
+#![feature(iter_intersperse)]
 
 use rocket::{Build, Rocket, Config, figment::Figment};
 use token_auth::TokenAuth;

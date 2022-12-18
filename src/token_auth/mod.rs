@@ -1,5 +1,3 @@
-use sqlx::PgPool;
-use ormx::Insert;
 use crate::bearer_token::BearerToken;
 
 pub struct TokenAuth {
