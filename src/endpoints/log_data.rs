@@ -28,6 +28,15 @@ pub struct PostSnapshot {
     pub soil_salt: f32,
 }
 
+#[derive(Deserialize, Debug)]
+#[serde(crate = "rocket::serde", rename_all = "camelCase")]
+pub struct PostSnapshotV2 {
+    pub f: u32,
+    pub i: u32,
+    pub v: u32,
+    pub s: u32,
+}
+
 pub struct Uid {
     pub uid: String,
 }
@@ -45,6 +54,17 @@ impl FromSegments<'_> for Uid {
             Err("uid is empty".to_string())
         }
     }
+}
+
+#[post("/logv2/<uid..>", data = "<snapshot>")]
+pub async fn debug_log_token(state: &State<ServerState>, token: BearerToken, uid: Uid, snapshot: Json<PostSnapshotV2>) -> CreateResponse {
+    println!("+{}+{}+", "-".repeat(20), "-".repeat(14));
+    println!("|{text:20}|{value:14}|", text="Firmware Version", value=snapshot.f);
+    println!("|{text:20}|{value:14}|", text="Illumination", value=snapshot.i);
+    println!("|{text:20}|{value:14}|", text="Voltage", value=snapshot.v);
+    println!("|{text:20}|{value:14}|", text="Soil", value=snapshot.s);
+    println!("+{}+{}+", "-".repeat(20), "-".repeat(14));
+    CreateResponse::Created("This was a triumph!\nI'm making a note here:\nHuge success!".to_string())
 }
 
 // uid is base64 encoded and can contain '/'
